@@ -26,33 +26,44 @@ class BottomNavBar extends ConsumerWidget {
       // ── iOS 26 Liquid Glass Bottom Bar ─────────────────────────────────────
       // GlassBottomBar uses the real shader pipeline on Impeller (iOS/Android),
       // and a lightweight CanvasKit shader on Web — no configuration needed.
-      bottomNavigationBar: GlassBottomBar(
-        selectedIndex: selectedIndex,
-        onTabSelected: (index) =>
-        ref.read(selectedIndexProvider.notifier).state = index,
+      bottomNavigationBar: Align(
+        alignment: Alignment.bottomCenter,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(
+            maxWidth: 800,
+          ),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: GlassBottomBar(
+              selectedIndex: selectedIndex,
+              onTabSelected: (index) =>
+              ref.read(selectedIndexProvider.notifier).state = index,
 
-        // Premium quality = full two-pass Gaussian blur + chromatic aberration.
-        // Perfect for a static bottom bar surface.
-        quality: GlassQuality.premium,
+              // Premium quality = full two-pass Gaussian blur + chromatic aberration.
+              // Perfect for a static bottom bar surface.
+              quality: GlassQuality.premium,
 
-        tabs: const [
-          GlassBottomBarTab(
-            label: 'Home',
-            icon: Icon(Icons.home_rounded),
+              tabs: const [
+                GlassBottomBarTab(
+                  label: 'Home',
+                  icon: Icon(Icons.home_rounded),
+                ),
+                GlassBottomBarTab(
+                  label: 'Work',
+                  icon: Icon(Icons.work_rounded),
+                ),
+                GlassBottomBarTab(
+                  label: 'About',
+                  icon: Icon(Icons.person_rounded),
+                ),
+                GlassBottomBarTab(
+                  label: 'Contact',
+                  icon: Icon(Icons.mail_rounded),
+                ),
+              ],
+            ),
           ),
-          GlassBottomBarTab(
-            label: 'Work',
-            icon: Icon(Icons.work_rounded),
-          ),
-          GlassBottomBarTab(
-            label: 'About',
-            icon: Icon(Icons.person_rounded),
-          ),
-          GlassBottomBarTab(
-            label: 'Contact',
-            icon: Icon(Icons.mail_rounded),
-          ),
-        ],
+        ),
       ),
 
       // ── Page Content ────────────────────────────────────────────────────────
