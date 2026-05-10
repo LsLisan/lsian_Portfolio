@@ -11,6 +11,7 @@ const String bottomNavBar = '/nav';
 const String onboarding = '/onBoarding';
 
 final goRouterProvider = Provider<GoRouter>((ref) {
+  // Watch the startup state to trigger the redirect logic automatically
   final startupState = ref.watch(splashProvider);
 
   return GoRouter(
@@ -18,10 +19,20 @@ final goRouterProvider = Provider<GoRouter>((ref) {
     redirect: (context, state) {
       final location = state.matchedLocation;
 
+      // While the timer/assets are loading, stay on Splash
       if (startupState == AppStartupState.loading) {
         return splashScreen;
       }
 
+      // Once loading is 'completed', decide where to go
+      if (location == splashScreen && startupState == AppStartupState.completed) {
+        /* Since there is no authentication, we choose a default
+           landing page (Onboarding or BottomNavBar).
+        */
+        return onboarding;
+      }
+
+      /* Unused Auth Logic
       if (location == splashScreen) {
         if (startupState == AppStartupState.authenticated) {
           return bottomNavBar;
@@ -29,6 +40,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
           return onboarding;
         }
       }
+      */
 
       return null;
     },
