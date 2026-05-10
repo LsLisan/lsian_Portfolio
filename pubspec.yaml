@@ -41,6 +41,7 @@ dependencies:
   flutter_riverpod: ^3.3.1
   google_fonts: ^8.1.0
   flutter_screenutil: ^5.9.3
+  liquid_glass_widgets: ^0.10.9
 
 
 dev_dependencies:
